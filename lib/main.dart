@@ -1,29 +1,57 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
 
-// You can read about packages here: https://flutter.io/using-packages/
 import 'package:flutter/material.dart';
 
-// TODO: Import the CategoryRoute widget
-import 'category_route.dart';
-/// The function that is called when main.dart is run.
-void main() {
-  runApp(UnitConverterApp());
+main() {
+  runApp(MaterialApp(
+    home: Page1(),
+  ));
 }
 
-/// This widget is the root of our application.
-///
-/// The first screen we see is a list [Categories].
-class UnitConverterApp extends StatelessWidget {
+class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Unit Converter',
-      // TODO: Instead of pointing to exactly 1 Category widget,
-      // our home should now point to an instance of the CategoryRoute widget.
-      home: CategoryRoute(),
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: RaisedButton(
+          child: Text("GO"),
+          onPressed: () {
+            Navigator.of(context).push(_createRoute());
+          },
+
+        ),
+      ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder:(context, animation, secondaryAnimation) => Page2(),
+      transitionsBuilder:(context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      }
     );
   }
 }
+
+class Page2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Text("Page 2"),
+      ),
+    );
+  }
+}
+
