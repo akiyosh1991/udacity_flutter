@@ -1,29 +1,64 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-// You can read about packages here: https://flutter.io/using-packages/
 import 'package:flutter/material.dart';
 
-// TODO: Import the CategoryRoute widget
-import 'category_route.dart';
-/// The function that is called when main.dart is run.
-void main() {
-  runApp(UnitConverterApp());
-}
+void main() => runApp(MyApp());
 
-/// This widget is the root of our application.
-///
-/// The first screen we see is a list [Categories].
-class UnitConverterApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  final appTitle = 'Drawer Demo';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Unit Converter',
-      // TODO: Instead of pointing to exactly 1 Category widget,
-      // our home should now point to an instance of the CategoryRoute widget.
-      home: CategoryRoute(),
+      title: appTitle,
+      home: MyHomePage(title: appTitle),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  final String title;
+
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(child: Text('My Page!')),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
