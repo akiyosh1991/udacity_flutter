@@ -40,6 +40,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Enter your username',
+            ),
             validator: (value){
               if (value.isEmpty) {
                 return "please enter some text";
